@@ -1,30 +1,30 @@
 # yank-as-codeblock.nvim
 
-選択範囲を「ファイルパス + 行番号 + 言語タグ + コード」の Markdown コードフェンス
-形式に整形してシステムクリップボードへヤンクする Neovim プラグイン。
+![CI](https://github.com/satomi-1224/yank-as-codeblock.nvim/actions/workflows/test.yml/badge.svg)
 
-```
+選択範囲を「ファイルパス + 行番号 + 言語タグ + コード」の Markdown コードフェンス形式に整形してシステムクリップボードへヤンクする Neovim プラグイン。
+
+**出力例:**
+
+````
 src/app.py:10-20
 ```python
 def foo():
     pass
 ```
-```
+````
 
 ## 必要環境
 
 - Neovim 0.10+
-- `unnamedplus` クリップボード対応 (macOS/Linux/Windows いずれも標準で OK)
 
 ## インストール
 
 ### lazy.nvim
 
-ローカル開発用 (本リポジトリ):
-
 ```lua
 {
-  dir = "~/Work/yank-as-codeblock.nvim",
+  "satomi-1224/yank-as-codeblock.nvim",
   keys = {
     { "<leader>yc", ":YankAsCodeBlock<CR>", mode = "v",
       desc = "選択範囲を Markdown コードブロックでヤンク" },
@@ -32,10 +32,31 @@ def foo():
 }
 ```
 
+### packer.nvim
+
+```lua
+use "satomi-1224/yank-as-codeblock.nvim"
+```
+
+### vim-plug
+
+```vim
+Plug 'satomi-1224/yank-as-codeblock.nvim'
+```
+
 ## 使い方
 
-ビジュアル選択して `:YankAsCodeBlock`、または上記の `<leader>yc` を押す。
-クリップボードに整形済みテキストが入る。
+ビジュアルモードで範囲を選択して `:YankAsCodeBlock` を実行する。
+キーマップを設定している場合は `<leader>yc` でも起動できる。
+
+クリップボードに以下の形式で整形されたテキストが入る:
+
+````
+{ファイルパス}:{行番号}
+```{filetype}
+{選択したコード}
+```
+````
 
 ## 開発
 
@@ -43,4 +64,4 @@ def foo():
 make test
 ```
 
-`plenary.nvim` の `PlenaryBustedDirectory` でテストを実行する。
+[plenary.nvim](https://github.com/nvim-lua/plenary.nvim) の `PlenaryBustedDirectory` でテストを実行する。
